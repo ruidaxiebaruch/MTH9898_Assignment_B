@@ -1,14 +1,25 @@
 / As an example for computing daily VWAP, I use AAPL
 / Using other tickers, such as GOOG, is just the same
 
+/ load the .csv data files
+/ By changing the file name, this program works equally well with all the data
+/ generated with the other program
 data: ("ZFFIF"; enlist ",") 0: hsym "S"$ "HD.csv"
+/ the index of rows
 countData: 0
+/ the total number of data used as a stopping criterion for the while loop
 totalData: count data
+/ initialize dailyVWAP
 dailyVWAP: 0
+/ store the dailyVWAPs for 10 days
 dailyVWAPs: 10#0.0
+/ the total volume up to the moment computations are being done
 totalVol: 0
+/ the number of days computed since we are computing DAILY VWAPs. This is a
+/ necessary index
 countDays: 0
 
+/ a while loop to compute dailyVWAPs by definition. The simplest method
 while[countData<totalData;dailyVWAP:(dailyVWAP*(totalVol%(totalVol+data[countData][`Volume])))+((data[countData][`Price])*(data[countData][`Volume]%(totalVol+data[countData][`Volume])));totalVol:totalVol+data[countData][`Volume];if[("t"$data[countData][`Time])>("t"$data[countData+1][`Time]);dailyVWAPs[countDays]:dailyVWAP;countDays:countDays+1];countData:countData+1]
 
 

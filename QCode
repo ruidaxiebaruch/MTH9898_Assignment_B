@@ -1,9 +1,12 @@
+/ the beginning time for trading each day
 days: 2016.02.29T09:30:00.000 2016.03.01T09:30:00.000 2016.03.02T09:30:00.000 2016.03.03T09:30:00.000 2016.03.04T09:30:00.000 2016.03.07T09:30:00.000 2016.03.08T09:30:00.000 2016.03.09T09:30:00.000 2016.03.10T09:30:00.000 2016.03.11T09:30:00.000
 
+/ all the symbols with which we work
 symbols:`AAPL`GOOG`MSFT`YAHOO`YOKU`BIDU`ABT`ACV`ADS`AED`DCT`DCUA`HAE`HCLP`HD`MBI`MCI`MCS`PAM`PBA
 
+/ store the data for each stock
 allTables:`table01`table02`table03`table04`table05`table06`table07`table08`table09`table10`table11`table12`table13`table14`table15`table16`table17`table18`table19`table20
-
+/ initialize the tables as empty
 table01:([]Time:0#0Nz;Price:0n;Volume:0N)
 table02:([]Time:0#0Nz;Price:0n;Volume:0N)
 table03:([]Time:0#0Nz;Price:0n;Volume:0N)
@@ -25,14 +28,23 @@ table18:([]Time:0#0Nz;Price:0n;Volume:0N)
 table19:([]Time:0#0Nz;Price:0n;Volume:0N)
 table20:([]Time:0#0Nz;Price:0n;Volume:0N)
 
+/ indicate which day we are at
 countDay:0
+/ indicate which stock we are currently working with
 countSym:0
 
+/ generate the data in the format of datetime,price,volume
+/ datetime is incremented by a roughly uniform distribution of 5 seconds per trade
+/ by change the "5 seconds per trade," one can manipulate the sizes of the 
+/ synthetic files
+/ the prices follow geometric Brownian motion with an upward drift
+/ volume is uniform [0,5000)
 while[countSym<20;countDay:0;insert[allTables[countSym];(days[countDay]+(1?(1%86400.0))+(1%86400000.0);(1?190.0)[0]+10.0;1?5000)];while[countDay<10;currPrice:allTables[countSym][`Price] where allTables[countSym][`Time] = max allTables[countSym][`Time];currTime:(max allTables[countSym][`Time])+(1?(1%8640.0))[0]+(1%86400000.0);if[(currTime+(1%86400.0))>(days[countDay]+(6.5%24.0));countDay:countDay+1;currTime:days[countDay]+(1?(1%86400.0))[0]+(1%86400000.0)];insert[allTables[countSym];(currTime;currPrice[0]*(1+(1?0.002)[0]-0.00099);(1?5000)[0])]];countSym:countSym+1]
 
+/ construct a dictionary. Not necessary but neater
 dict:symbols!allTables
 
-
+/ save all the data as .csv files
 (hsym "S"$ "AAPL.csv") 0: .h.cd table01
 (hsym "S"$ "GOOG.csv") 0: .h.cd table02
 (hsym "S"$ "MSFT.csv") 0: .h.cd table03
