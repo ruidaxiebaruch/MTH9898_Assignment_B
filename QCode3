@@ -1,0 +1,14 @@
+/ As an example for computing daily VWAP, I use AAPL
+/ Using other tickers, such as GOOG, is just the same
+
+data: ("ZFFIF"; enlist ",") 0: hsym "S"$ "HD.csv"
+countData: 0
+totalData: count data
+dailyVWAP: 0
+dailyVWAPs: 10#0.0
+totalVol: 0
+countDays: 0
+
+while[countData<totalData;dailyVWAP:(dailyVWAP*(totalVol%(totalVol+data[countData][`Volume])))+((data[countData][`Price])*(data[countData][`Volume]%(totalVol+data[countData][`Volume])));totalVol:totalVol+data[countData][`Volume];if[("t"$data[countData][`Time])>("t"$data[countData+1][`Time]);dailyVWAPs[countDays]:dailyVWAP;countDays:countDays+1];countData:countData+1]
+
+

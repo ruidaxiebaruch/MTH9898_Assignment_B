@@ -1,0 +1,62 @@
+days: 2016.02.29T09:30:00.000 2016.03.01T09:30:00.000 2016.03.02T09:30:00.000 2016.03.03T09:30:00.000 2016.03.04T09:30:00.000 2016.03.07T09:30:00.000 2016.03.08T09:30:00.000 2016.03.09T09:30:00.000 2016.03.10T09:30:00.000 2016.03.11T09:30:00.000
+
+symbols:`AAPL`GOOG`MSFT`YAHOO`YOKU`BIDU`ABT`ACV`ADS`AED`DCT`DCUA`HAE`HCLP`HD`MBI`MCI`MCS`PAM`PBA
+
+allTables:`table01`table02`table03`table04`table05`table06`table07`table08`table09`table10`table11`table12`table13`table14`table15`table16`table17`table18`table19`table20
+
+table01:([]Time:0#0Nz;Price:0n;Volume:0N)
+table02:([]Time:0#0Nz;Price:0n;Volume:0N)
+table03:([]Time:0#0Nz;Price:0n;Volume:0N)
+table04:([]Time:0#0Nz;Price:0n;Volume:0N)
+table05:([]Time:0#0Nz;Price:0n;Volume:0N)
+table06:([]Time:0#0Nz;Price:0n;Volume:0N)
+table07:([]Time:0#0Nz;Price:0n;Volume:0N)
+table08:([]Time:0#0Nz;Price:0n;Volume:0N)
+table09:([]Time:0#0Nz;Price:0n;Volume:0N)
+table10:([]Time:0#0Nz;Price:0n;Volume:0N)
+table11:([]Time:0#0Nz;Price:0n;Volume:0N)
+table12:([]Time:0#0Nz;Price:0n;Volume:0N)
+table13:([]Time:0#0Nz;Price:0n;Volume:0N)
+table14:([]Time:0#0Nz;Price:0n;Volume:0N)
+table15:([]Time:0#0Nz;Price:0n;Volume:0N)
+table16:([]Time:0#0Nz;Price:0n;Volume:0N)
+table17:([]Time:0#0Nz;Price:0n;Volume:0N)
+table18:([]Time:0#0Nz;Price:0n;Volume:0N)
+table19:([]Time:0#0Nz;Price:0n;Volume:0N)
+table20:([]Time:0#0Nz;Price:0n;Volume:0N)
+
+countDay:0
+countSym:0
+
+while[countSym<20;countDay:0;insert[allTables[countSym];(days[countDay]+(1?(1%86400.0))+(1%86400000.0);(1?190.0)[0]+10.0;1?5000)];while[countDay<10;currPrice:allTables[countSym][`Price] where allTables[countSym][`Time] = max allTables[countSym][`Time];currTime:(max allTables[countSym][`Time])+(1?(1%8640.0))[0]+(1%86400000.0);if[(currTime+(1%86400.0))>(days[countDay]+(6.5%24.0));countDay:countDay+1;currTime:days[countDay]+(1?(1%86400.0))[0]+(1%86400000.0)];insert[allTables[countSym];(currTime;currPrice[0]*(1+(1?0.002)[0]-0.00099);(1?5000)[0])]];countSym:countSym+1]
+
+dict:symbols!allTables
+
+
+(hsym "S"$ "AAPL.csv") 0: .h.cd table01
+(hsym "S"$ "GOOG.csv") 0: .h.cd table02
+(hsym "S"$ "MSFT.csv") 0: .h.cd table03
+(hsym "S"$ "YAHOO.csv") 0: .h.cd table04
+(hsym "S"$ "YOKU.csv") 0: .h.cd table05
+(hsym "S"$ "BIDU.csv") 0: .h.cd table06
+(hsym "S"$ "ABT.csv") 0: .h.cd table07
+(hsym "S"$ "ACV.csv") 0: .h.cd table08
+(hsym "S"$ "ADS.csv") 0: .h.cd table09
+(hsym "S"$ "AED.csv") 0: .h.cd table10
+(hsym "S"$ "DCT.csv") 0: .h.cd table11
+(hsym "S"$ "DCUA.csv") 0: .h.cd table12
+(hsym "S"$ "HAE.csv") 0: .h.cd table13
+(hsym "S"$ "HCLP.csv") 0: .h.cd table14
+(hsym "S"$ "HD.csv") 0: .h.cd table15
+(hsym "S"$ "MBI.csv") 0: .h.cd table16
+(hsym "S"$ "MCI.csv") 0: .h.cd table17
+(hsym "S"$ "MCS.csv") 0: .h.cd table18
+(hsym "S"$ "PAM.csv") 0: .h.cd table19
+(hsym "S"$ "PBA.csv") 0: .h.cd table20
+
+
+
+
+
+
+
